@@ -1,118 +1,89 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export default function TimerComponent() {
-    const [isTimerActive, setIsTimerActive] = useState(false);
-    const [timerDuration, setTimerDuration] = useState(null);
-    const [intervalId, setIntervalId] = useState(null);
-
-    const alertSoundUrl = "/audio/agradeceu e trocou-girl.mp3"; // Caminho para o arquivo de áudio
-
+export default function TimerComponent({ onTimerEnd }) {
+    const [timeRemaining, setTimeRemaining] = useState(90); // Tempo restante em segundos
+    const [isActive, setIsActive] = useState(false); // Estado do timer
+    const [inputTime, setInputTime] = useState(90); // Tempo inicial padrão (30 segundos)
     const alertSound = useRef(null);
+    const timerInterval = useRef(null);
 
-    // Função para iniciar o som de alerta
-    const startAudio = () => {
-        if (alertSound.current) {
-            alertSound.current.currentTime = 0;  // Reseta o tempo de reprodução
-            alertSound.current.play().catch((error) => {
-                console.log("Erro ao tentar tocar o áudio:", error);
-            });
-        }
-    };
+    useEffect(() => {
+        // Carrega o áudio no início
+        alertSound.current = new Audio("/audio/agradeceu e trocou.mp3");
+        alertSound.current.loop = false; // Não precisa de loop; será controlado manualmente
+        alertSound.current.onerror = () => {
+            console.error("Erro ao carregar o som de alerta. Verifique o caminho ou formato do arquivo.");
+        };
 
-    // Função para diminuir o volume gradualmente
-    const reduceVolume = (audio) => {
-        let volume = audio.volume;
-        const interval = setInterval(() => {
-            if (volume > 0) {
-                volume -= 0.05;  // Reduz o volume gradualmente
-                audio.volume = Math.max(volume, 0);  // Garante que o volume não fique abaixo de 0
-            } else {
-                clearInterval(interval);  // Para de diminuir o volume quando atingir zero
-            }
-        }, 100);
-    };
+        return () => {
+            clearInterval(timerInterval.current); // Limpa o intervalo ao desmontar o componente
+        };
+    }, []);
 
-    // Função para aumentar o volume gradualmente
-    const restoreVolume = (audio) => {
-        let volume = audio.volume;
-        const interval = setInterval(() => {
-            if (volume < 1) {
-                volume += 0.05;  // Aumenta o volume gradualmente
-                audio.volume = Math.min(volume, 1);  // Garante que o volume não ultrapasse 1
-            } else {
-                clearInterval(interval);  // Para de aumentar o volume quando atingir o máximo
-            }
-        }, 100);
-    };
-
-
-
-    // Função para iniciar o timer
     const startTimer = () => {
-        const minutesInput = document.querySelector('.minutesInput').value || 0;
-        const secondsInput = document.querySelector('.secondsInput').value || 0;
-        const countdownTime = (parseInt(minutesInput) * 60 + parseInt(secondsInput)) * 1000;
-
-        if (isNaN(countdownTime) || countdownTime <= 0) {
-            console.log("Tempo inválido");
+        if (inputTime <= 0) {
+            console.log("Configure um tempo válido antes de iniciar o timer.");
             return;
         }
 
-        setTimerDuration(countdownTime);
+        setTimeRemaining(inputTime);
+        setIsActive(true);
 
-        // Inicia o intervalo que vai tocar o áudio quando o timer completar
-        const interval = setInterval(() => {
-            startAudio();  // Toca o som
-            console.log("alert init");
-
-            // Aumenta o volume quando o timer termina
-            restoreVolume(alertSound.current);
-
-            // Para o timer após a execução
-            clearInterval(interval);
-            setIntervalId(null);
-        }, countdownTime);
-
-        setIntervalId(interval);
-        console.log("Timer iniciado com duração:", countdownTime, "milissegundos.");
-
-        // Diminui o volume do áudio enquanto o timer está em execução
-        reduceVolume(alertSound.current);
+        timerInterval.current = setInterval(() => {
+            setTimeRemaining((prev) => {
+                if (prev <= 1) {
+                    playAlertSound(); // Reproduz o som de alerta
+                    if (onTimerEnd) onTimerEnd();
+                    return inputTime; // Reinicia o timer com o valor do input
+                }
+                return prev - 1; // Decrementa o tempo restante
+            });
+        }, 1000); // Intervalo de 1 segundo
     };
 
-    // Função para parar o timer
     const stopTimer = () => {
-        if (intervalId) {
-            clearTimeout(intervalId);  // Limpa o setTimeout
-            setIntervalId(null);
-            console.log("Timer parado.");
+        setIsActive(false);
+        clearInterval(timerInterval.current);
+    };
+
+    const resetTimer = () => {
+        stopTimer();
+        setTimeRemaining(inputTime); // Redefine para o valor do input
+    };
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        const parsedValue = parseInt(value, 10);
+        if (!isNaN(parsedValue) && parsedValue >= 0) {
+            setInputTime(parsedValue);
+            if (!isActive) setTimeRemaining(parsedValue); // Atualiza o tempo restante se o timer não estiver ativo
         }
     };
 
-    // Alterna entre iniciar e parar o timer
-    const toggleTimer = () => {
-        if (isTimerActive) {
-            stopTimer();
-        } else {
-            startTimer();
+    const playAlertSound = () => {
+        if (alertSound.current) {
+            alertSound.current.currentTime = 0;
+            alertSound.current.play().catch((err) =>
+                console.error("Erro ao tentar tocar o som de alerta:", err)
+            );
         }
-        setIsTimerActive(!isTimerActive);
     };
-
-    // Usando ref para carregar o áudio
-    useEffect(() => {
-        alertSound.current = new Audio(alertSoundUrl);
-        alertSound.current.volume = 1;  // Inicializa com volume máximo
-    }, []);
 
     return (
         <div>
-            <input type="number" className="minutesInput" placeholder="Minutos" />
-            <input type="number" className="secondsInput" placeholder="Segundos" />
-            <button className="toggle__timer" onClick={toggleTimer}>
-                {isTimerActive ? "Stop" : "Start"}
+            <h4>Timer</h4>
+            <input
+                type="number"
+                min="0"
+                value={inputTime} // Valor padrão do input
+                onChange={handleInputChange}
+                disabled={isActive}
+            />
+            <p>Tempo Restante: {timeRemaining}s</p>
+            <button onClick={isActive ? stopTimer : startTimer}>
+                {isActive ? "Parar" : "Iniciar"}
             </button>
+            <button onClick={resetTimer}>Resetar</button>
         </div>
     );
 }
-

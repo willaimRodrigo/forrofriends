@@ -1,9 +1,11 @@
+import "./style.scss";
+
 export const Footer = () => {
     return (
-        <>
-         <h4>ForróFriends</h4>
-         <p>(logo tipo teremos)</p>
-        </>
+        <div className="container-footer">
+         <h4>Treinando com os migos</h4>
+         <img className="logo" src="/img/logo-forrofriends.jpeg" alt="logotipo da aplicação"/>
+        </div>
     )
     
 }
