@@ -39,14 +39,40 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     const [isTimerVisible, setIsTimerVisible] = useState(false);
     const [isTraingVisible, setIsTrainingVisible] = useState(false);
 
+    // Salva no cache quando a playlist mudar
     useEffect(() => {
-        setPlaylist(album);
-        setOriginalPlaylist(album);
-        setCurrentSongIndex(0);
-        if (album.length > 0) {
-            audioRef.current.src = album[0].src;
+        if (album && album.length > 0) {
+            localStorage.setItem("currentPlaylist", JSON.stringify(album));
+            console.log("Playlist salva no cache.");
         }
     }, [album]);
+
+    useEffect(() => {
+        const cachedPlaylist = localStorage.getItem("currentPlaylist");
+        if (cachedPlaylist) {
+            const parsedPlaylist = JSON.parse(cachedPlaylist);
+            setPlaylist(parsedPlaylist);
+            setOriginalPlaylist(parsedPlaylist);
+            setCurrentSongIndex(0);
+
+            if (parsedPlaylist.length > 0) {
+                audioRef.current.src = parsedPlaylist[0].src;
+            }
+
+            console.log("Playlist carregada do cache.");
+        } else if (album) {
+            setPlaylist(album);
+            setOriginalPlaylist(album);
+            setCurrentSongIndex(0);
+
+            if (album.length > 0) {
+                audioRef.current.src = album[0].src;
+            }
+
+            console.log("Playlist carregada do álbum.");
+        }
+    }, [album]);
+
 
     const playAudio = () => {
         audioRef.current.play();
@@ -155,6 +181,8 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                         nextSong={nextSong}
                         pauseAudio={pauseAudio} 
                         audioRef={audioRef}
+                        restoreVolume={() => restoreVolume(audioRef)}
+                        reduceVolume={() => reduceVolume(audioRef)}
                     />
                 </div>
             )}
