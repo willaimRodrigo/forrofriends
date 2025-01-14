@@ -1,5 +1,10 @@
+import "./style.scss";
+
 export const About = () => {
     return (
-        <h3>Aplicativo ForróFriends, para treinar pra Carai</h3>
+        <div className="divabout">
+           <h3>Aplicativo ForróFriends, para treinar pra Carai</h3> 
+        </div>
+        
     )
 }

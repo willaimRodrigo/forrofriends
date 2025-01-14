@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+
+import "./style.scss";
 
 
 export const Header = () => {
@@ -16,7 +18,9 @@ export const Header = () => {
                         <Link to="/About">Sobre nós</Link>
                     </li>
                 </ul>
+                <img className="logo" src="/img/logo-forrofriends.jpeg" alt="logotipo da aplicação" />
             </nav>
+            
         </header>
     )
 }

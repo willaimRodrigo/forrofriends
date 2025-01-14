@@ -3,6 +3,8 @@ import { shuffleArray } from "../Funcions/functions";
 import TimerComponent from "../Funcions/TimerComponent";
 import TimerBlackBlue from "../Funcions/TimerblackBlue";
 
+import "./style.scss";
+
 const reduceVolume = (audio) => {
     if (!audio) return;
     let volume = audio.volume;
@@ -38,6 +40,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     const [isTimerActive, setIsTimerActive] = useState(false);
     const [isTimerVisible, setIsTimerVisible] = useState(false);
     const [isTraingVisible, setIsTrainingVisible] = useState(false);
+    const [isListVisible, setIsListVisible] = useState(false);
 
     // Salva no cache quando a playlist mudar
     useEffect(() => {
@@ -134,58 +137,106 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
         setIsTrainingVisible(!isTraingVisible); // Alterna a visibilidade do temporizador
     };
 
+    const toggleListVisibility = () => {
+        setIsListVisible(!isListVisible);
+    };
+
+    const handleSongClick = (index) => {
+        setCurrentSongIndex(index);
+        audioRef.current.src = playlist[index].src;
+        audioRef.current.play();
+    };
+
     return (
         <>
-            <h2>Controle de Reprodução</h2>
-            <audio ref={audioRef} controls onEnded={nextSong}>
-                <source src={playlist[currentSongIndex].src} type="audio/mp3" />
-            </audio>
-            <button onClick={prevSong}>Anterior</button>
-            <button onClick={playAudio}>Play</button>
-            <button onClick={pauseAudio}>Pause</button>
-            <button onClick={nextSong}>Próxima</button>
-            <button onClick={restartSong}>Refresh</button>
-            <button onClick={toggleShuffle}>
-                {isShuffled ? "Desativar Aleatório" : "Reprodução Aleatória"}
-            </button>
-            <h3>Tocando: {playlist[currentSongIndex].name}</h3>
-            <button onClick={toggleTimerVisibility}>
-                {isTimerVisible ? "Fechar Timer" : "Abrir Timer"}
-            </button>
-            {isTimerVisible && (
-                <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
-                    <button onClick={toggleTimerVisibility} style={{ float: "right" }}>
-                        X
-                    </button>
-                    <TimerComponent
-                        onTimerEnd={handleTimerEnd}
-                        isActive={isTimerActive}
-                    />
+            <section className="sectionplayer">
+                <div className="divinfoplayer">
+                    <h2>
+                        <span className="scrolling-text">{playlist[currentSongIndex].name}</span>
+                    </h2>
+                    <h4>
+                        <span className="scrolling-text">{playlist[currentSongIndex].band}</span>
+                    </h4>
                 </div>
-            )}
+                
+                <audio className="control" ref={audioRef} controls onEnded={nextSong}>
+                    <source src={playlist[currentSongIndex].src} type="audio/mp3" />
+                </audio>
+                <div>
+                    <button className="buttonplayer" onClick={prevSong}>back</button>
+                    <button className="buttonplayer" onClick={nextSong}>next</button>
+                    <button className="buttonplayer" onClick={restartSong}>Refresh</button>
+                    <button className="buttonplayer" onClick={toggleShuffle}>
+                        {isShuffled ? "Shuffle On" : "Shuffle off"}
+                    </button>
+                </div>
 
-            <button onClick={toggleTrainingVisibility}>
-                {isTraingVisible ? "Fechar Treino" : "Abrir Treino"}
-            </button>
-            {isTraingVisible && (
-                <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
-                    
-                    <button onClick={toggleTrainingVisibility} style={{ float: "right" }}>
-                        X
+                <div className="playlist-container">
+                    <button onClick={toggleListVisibility}>
+                        {isListVisible ? "Close " : "Playlist"}
                     </button>
-                    <TimerBlackBlue
-                        isVisible={isTraingVisible}
-                        countdownTime1={countdownTime1}
-                        countdownTime2={countdownTime2}
-                        onClose={() => setIsTrainingVisible(false)}
-                        nextSong={nextSong}
-                        pauseAudio={pauseAudio} 
-                        audioRef={audioRef}
-                        restoreVolume={() => restoreVolume(audioRef)}
-                        reduceVolume={() => reduceVolume(audioRef)}
-                    />
+
+                    {isListVisible && (
+                        <ul className="playlist">
+                            {playlist.map((song, index) => (
+                                <li
+                                    key={index}
+                                    className={`playlist-item ${index === currentSongIndex ? "active" : ""
+                                        }`}
+                                    onClick={() => handleSongClick(index)}
+                                >
+                                    {song.name} - {song.band}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
-            )}
+            </section>
+            
+            <div className="divtimers">
+                <button onClick={toggleTimerVisibility}>
+                    {isTimerVisible ? "Fechar Timer" : "Abrir Timer"}
+                </button>
+                {isTimerVisible && (
+                    <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
+                        <button onClick={toggleTimerVisibility} style={{ float: "right" }}>
+                            X
+                        </button>
+                        <TimerComponent
+                            onTimerEnd={handleTimerEnd}
+                            isActive={isTimerActive}
+                        />
+                    </div>
+                )}
+
+                <button onClick={toggleTrainingVisibility}>
+                    {isTraingVisible ? "Fechar Treino" : "Abrir Treino"}
+                </button>
+                {isTraingVisible && (
+                    <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
+                        
+                        <button onClick={toggleTrainingVisibility} style={{ float: "right" }}>
+                            X
+                        </button>
+                        <TimerBlackBlue
+                            isVisible={isTraingVisible}
+                            countdownTime1={countdownTime1}
+                            countdownTime2={countdownTime2}
+                            onClose={() => setIsTrainingVisible(false)}
+                            nextSong={nextSong}
+                            pauseAudio={pauseAudio} 
+                            audioRef={audioRef}
+                            restoreVolume={() => restoreVolume(audioRef)}
+                            reduceVolume={() => reduceVolume(audioRef)}
+                        />
+                    </div>
+                )}
+            </div>
+            
         </>
     );
 }
+
+
+{/* <button onClick={playAudio}>Play</button>
+            // <button onClick={pauseAudio}>Pause</button> */}

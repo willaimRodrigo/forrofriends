@@ -11,6 +11,12 @@ export const Playlists = () => {
                     <li>
                         <Link to="/blueadv">Azul Avançada</Link>
                     </li>
+                    <li>
+                        <Link to="/blue">Azul Bebe</Link>
+                    </li>
+                    <li>
+                        <Link to="/party">Baile</Link>
+                    </li>
                 </ul>
         </>
     )

@@ -1,6 +1,3 @@
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
-
 export function shuffleArray(array) {
   let shuffled = array.slice();
   for (let i = shuffled.length - 1; i > 0; i--) {

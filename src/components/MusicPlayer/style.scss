@@ -1,0 +1,81 @@
+.sectionplayer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .divinfoplayer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 30vh;
+    }
+
+    h2, h4 {
+        color: rgb(28, 51, 28);
+        max-width: 90%;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        text-align: center;
+
+        .scrolling-text {
+            display: inline-block;
+            animation: scroll-text 8s linear infinite;
+            white-space: nowrap;
+        }
+    }
+
+    @keyframes scroll-text {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    .control {
+        background-color: rgb(7, 7, 7);
+        width: 90%;
+        height: 40px;
+    }
+
+    .buttonplayer {
+        font-size: 1rem;
+    }
+
+    .playlist-container {
+        max-height: 150px;
+        width: 90%;
+        overflow-y: auto;
+        border: 1px solid black;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .playlist {
+        list-style: none;
+        width: 80vw;
+    }
+
+    .playlist-item {
+        cursor: pointer;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        max-width: 70vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+        .playlist-item:hover {
+            background-color: #e9e9e9;
+        }
+
+    .divtimers {
+        display: flex;
+        background-color: aqua;
+        height: 10vh;
+    }
+}
