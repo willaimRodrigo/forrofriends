@@ -1,6 +1,6 @@
 export const blue = [
   {
-    src: "/audio/blue/Amor Coado.mp3",
+    src: "/audio/blue/Amor coado.mp3",
     name: "Amor Coado",
     band: "Trio Juazeiro",
   },

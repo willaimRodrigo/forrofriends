@@ -15,6 +15,18 @@ export const SelectedAlbum = ({ onAlbumSelect }) => {
         {
             name: "Party",
             key: "party"
+        },
+        {
+            name: "White",
+            key: "white"
+        },
+        {
+            name: "Blueint",
+            key: "blueint"
+        },
+        {
+            name: "Pre",
+            key: "pre"
         }
     ];
 

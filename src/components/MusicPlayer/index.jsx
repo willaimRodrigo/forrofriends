@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { shuffleArray } from "../Funcions/functions";
 import TimerComponent from "../Funcions/TimerComponent";
+import TimerBlues from "../Funcions/TimerBlues";
 import TimerBlackBlue from "../Funcions/TimerblackBlue";
 
 import "./style.scss";
@@ -41,6 +42,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     const [isTimerVisible, setIsTimerVisible] = useState(false);
     const [isTraingVisible, setIsTrainingVisible] = useState(false);
     const [isListVisible, setIsListVisible] = useState(false);
+    const [isTraininBlackVisible, setIsTraininBlackVisible] = useState(false);
 
     // Salva no cache quando a playlist mudar
     useEffect(() => {
@@ -141,6 +143,10 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
         setIsListVisible(!isListVisible);
     };
 
+    const toggleTrainingVisibilityBlack = () => {
+        setIsTraininBlackVisible(!isTraininBlackVisible);
+    };
+
     const handleSongClick = (index) => {
         setCurrentSongIndex(index);
         audioRef.current.src = playlist[index].src;
@@ -195,7 +201,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
             
             <div className="divtimers">
                 <button onClick={toggleTimerVisibility}>
-                    {isTimerVisible ? "Fechar Timer" : "Abrir Timer"}
+                    {isTimerVisible ? "Fechar Timer" : "Alerta Trocou"}
                 </button>
                 {isTimerVisible && (
                     <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
@@ -210,7 +216,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 )}
 
                 <button onClick={toggleTrainingVisibility}>
-                    {isTraingVisible ? "Fechar Treino" : "Abrir Treino"}
+                    {isTraingVisible ? "Fechar Treino" : "Exame Sem Troca"}
                 </button>
                 {isTraingVisible && (
                     <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
@@ -218,10 +224,9 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                         <button onClick={toggleTrainingVisibility} style={{ float: "right" }}>
                             X
                         </button>
-                        <TimerBlackBlue
+                        <TimerBlues
                             isVisible={isTraingVisible}
                             countdownTime1={countdownTime1}
-                            countdownTime2={countdownTime2}
                             onClose={() => setIsTrainingVisible(false)}
                             nextSong={nextSong}
                             pauseAudio={pauseAudio} 
@@ -230,6 +235,30 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                             reduceVolume={() => reduceVolume(audioRef)}
                         />
                     </div>
+                    
+                )}
+
+                <button onClick={toggleTrainingVisibilityBlack}>
+                    {isTraininBlackVisible ? "Fechar Treino" : "Exame AzulAv/Preta"}
+                </button>
+                {isTraininBlackVisible && (
+                    <section style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
+
+                        <button onClick={toggleTrainingVisibility} style={{ float: "right" }}>
+                            X
+                        </button>
+                        <TimerBlackBlue
+                            isVisible={isTraininBlackVisible}
+                            countdownTime1={countdownTime1}
+                            countdownTime2={countdownTime2}
+                            onClose={() => setIsTrainingVisible(false)}
+                            nextSong={nextSong}
+                            pauseAudio={pauseAudio}
+                            audioRef={audioRef}
+                            restoreVolume={() => restoreVolume(audioRef)}
+                            reduceVolume={() => reduceVolume(audioRef)}
+                        />
+                    </section>
                 )}
             </div>
             
