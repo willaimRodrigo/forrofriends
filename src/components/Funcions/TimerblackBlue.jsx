@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 const TimerBlackBlue = ({ 
     isVisible,
       countdownTime1,
+      countdownTime2,
        nextSong,
         pauseAudio,
          audioRef,
@@ -67,8 +68,20 @@ const TimerBlackBlue = ({
                 restoreVolume();
             }, 2000)
              // Toca o som "agradeceu e trocou"
-        }, 20000); // 90 segundos
+        }, 70000); // 90 segundos
     };
+
+    const reduceAndPause = () => {
+        setTimeout(() => {
+            reduceVolume();
+
+            setTimeout(() => {
+                pauseAudio();
+                console.log("chegou aqui")
+                restoreVolume();
+            }, 3000)
+        }, 1000)
+    }
 
     const TimerForTimeOut = () => {
         setTimeout(() => {
@@ -79,11 +92,12 @@ const TimerBlackBlue = ({
                 reduceVolume();
                 
                 setTimeout(() => {
-                    pauseAudio();
-                    console.log("parou a música")
-                }, 2000)
-            }, 40000)
-        }, 2000)
+                    reduceAndPause();
+                    restoreVolume();
+                    stopTimer();
+                }, 74000)
+            }, 69000)
+        }, 4000)
     }
 
     const startTimer = () => {
@@ -91,20 +105,18 @@ const TimerBlackBlue = ({
 
         // Inicia o primeiro setTimeout
         timerRef.current = setTimeout(() => {
-            reduceVolume();
-            // pauseAudio();
-            // setIsTimerActive(false); // Pula a música ao atingir o tempo
+            reduceAndPause();
 
             timerRef.current = setTimeout(() => {
-                pauseAudio();
-                restoreVolume();
+                
+                console.log("restaura volume")
                 
                 timerRef.current = setTimeout(() => {
+                    console.log("pula musica")
                     nextSong();
                     TimerForTimeOut();
-                    stopTimer();
-                }, 5000)
-            }, 4000)
+                }, countdownTime2)
+            }, 8000)
         }, countdownTime1);
     };
 

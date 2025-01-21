@@ -57,17 +57,17 @@ const TimerBlues = ({
                 // Após pausar o áudio, restaura o volume
                 timerRef.current = setTimeout(() => {
                     restoreVolume();
-                    console.log("Volume restaurado.");
 
                     // Após restaurar o volume, pula para a próxima música
                     timerRef.current = setTimeout(() => {
                         nextSong();
                         console.log("Próxima música.");
                         stopTimer();
+                        pauseAudio();
                     }, 5000); // Tempo para próxima música
                 }, 4000); // Tempo para restaurar volume
             }, 2000); // Tempo para pausar áudio
-        }, countdownTime1); // Tempo inicial do timer
+        }, 86000); // Tempo inicial do timer
     };
 
     const stopTimer = () => {

@@ -4,7 +4,7 @@ import MusicPlayer from '../../components/MusicPlayer';
 import "./style.scss";
 
 export const Black = () => {  
-    const countdownTime1 = 15000;
+    const countdownTime1 = 80000;
     const countdouwnTime2 = 150000;
 
     return (

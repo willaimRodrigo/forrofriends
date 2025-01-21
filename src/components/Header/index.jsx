@@ -15,10 +15,13 @@ export const Header = () => {
                         <Link to="/Playlists">Playlists</Link>
                     </li>
                     <li>
-                        <Link to="/About">Sobre nós</Link>
+                        <Link to="/About">Sobre o App</Link>
                     </li>
                 </ul>
-                <img className="logo" src="/img/logo-forrofriends.jpeg" alt="logotipo da aplicação" />
+                <img className="logo"
+                 src="/img/logo-forrofriends.jpeg"
+                  alt="logotipo da aplicação" 
+                  />
             </nav>
             
         </header>

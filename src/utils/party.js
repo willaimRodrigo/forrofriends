@@ -1,15 +1,5 @@
 export const party = [
   {
-    src: "/audio/party/Lua Clara.mp3",
-    name: "Lua Clara",
-    band: "Trio Potigua",
-  },
-  {
-    src: "/audio/party/Minha Morena.mp3",
-    name: "Minha Morena",
-    band: "Chico Pessoa",
-  },
-  {
     src: "/audio/party/Balanceiro.mp3",
     name: "Balanceiro",
     band: "Forró stream",

@@ -2,7 +2,7 @@ nav {
     display: flex;
     justify-content: center;
     height: 50vh;
-    width: 90%;
+    width: 100%;
 
     .ul-album {
         display: flex;
@@ -10,7 +10,8 @@ nav {
         justify-content: space-around;
         align-items: center;
         list-style: none;
-        width: 100%;
+        width: 90%;
+        padding: 0;
     }
 
     .list-album {

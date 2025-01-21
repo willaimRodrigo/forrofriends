@@ -48,7 +48,6 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     useEffect(() => {
         if (album && album.length > 0) {
             localStorage.setItem("currentPlaylist", JSON.stringify(album));
-            console.log("Playlist salva no cache.");
         }
     }, [album]);
 
@@ -64,7 +63,6 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 audioRef.current.src = parsedPlaylist[0].src;
             }
 
-            console.log("Playlist carregada do cache.");
         } else if (album) {
             setPlaylist(album);
             setOriginalPlaylist(album);
@@ -74,14 +72,8 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 audioRef.current.src = album[0].src;
             }
 
-            console.log("Playlist carregada do álbum.");
         }
     }, [album]);
-
-
-    const playAudio = () => {
-        audioRef.current.play();
-    };
 
     const pauseAudio = () => {
         audioRef.current.pause();
@@ -178,7 +170,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 </div>
 
                 <div className="playlist-container">
-                    <button onClick={toggleListVisibility}>
+                    <button className="button-list" onClick={toggleListVisibility}>
                         {isListVisible ? "Close " : "Playlist"}
                     </button>
 
@@ -205,9 +197,6 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 </button>
                 {isTimerVisible && (
                     <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
-                        <button onClick={toggleTimerVisibility} style={{ float: "right" }}>
-                            X
-                        </button>
                         <TimerComponent
                             onTimerEnd={handleTimerEnd}
                             isActive={isTimerActive}
@@ -221,9 +210,6 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 {isTraingVisible && (
                     <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
                         
-                        <button onClick={toggleTrainingVisibility} style={{ float: "right" }}>
-                            X
-                        </button>
                         <TimerBlues
                             isVisible={isTraingVisible}
                             countdownTime1={countdownTime1}
@@ -244,9 +230,6 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                 {isTraininBlackVisible && (
                     <section style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
 
-                        <button onClick={toggleTrainingVisibility} style={{ float: "right" }}>
-                            X
-                        </button>
                         <TimerBlackBlue
                             isVisible={isTraininBlackVisible}
                             countdownTime1={countdownTime1}

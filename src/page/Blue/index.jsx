@@ -2,7 +2,7 @@ import { blue } from '../../utils/blue';
 import MusicPlayer from '../../components/MusicPlayer';
 
 export const Blue = () => {  
-    const countdownTime1 = 20000;
+    const countdownTime1 = 90000;
     // const countdouwnTime2 = 150000;
 
     return (
