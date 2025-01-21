@@ -52,6 +52,15 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     }, [album]);
 
     useEffect(() => {
+        for (let i = 0; i <= 8; 1++) {
+        if (playlist[currentSongIndex + 1]) {
+            const nextAudio = new Audio(playlist[currentSongIndex = 1].src);
+            nextAudio.load();
+            }
+        }
+    }, [currentSongIndex, playlist])
+
+    useEffect(() => {
         const cachedPlaylist = localStorage.getItem("currentPlaylist");
         if (cachedPlaylist) {
             const parsedPlaylist = JSON.parse(cachedPlaylist);
@@ -157,7 +166,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                     </h4>
                 </div>
                 
-                <audio className="control" ref={audioRef} controls onEnded={nextSong}>
+                <audio className="control" ref={audioRef} controls preload="auto" onEnded={nextSong}>
                     <source src={playlist[currentSongIndex].src} type="audio/mp3" />
                 </audio>
                 <div>
