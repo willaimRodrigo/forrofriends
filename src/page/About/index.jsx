@@ -5,7 +5,7 @@ export const About = () => {
         <>
         <section className="about-section">
             <div className="divabout">
-            <h2>Objetivoo acadêmico do App</h2> 
+            <h2>Objetivo acadêmico do App</h2> 
             <p>Estudar, melhorar e explorar todo o conteúdo como forma de exercícios práticos.
                 Construindo uma aplicação sozinho com o intuito de me desenvolver e ter experiêcias para área profissional! </p>
             </div>

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
 export default function TimerComponent({ onTimerEnd }) {
-    const [timeRemaining, setTimeRemaining] = useState(90); // Tempo restante em segundos
+    const [timeRemaining, setTimeRemaining] = useState(); // Tempo restante em segundos
     const [isActive, setIsActive] = useState(false); // Estado do timer
-    const [inputTime, setInputTime] = useState(90); // Tempo inicial padrão (30 segundos)
+    const [inputTime, setInputTime] = useState(); // Tempo inicial padrão (30 segundos)
     const alertSound = useRef(null);
     const timerInterval = useRef(null);
 
@@ -53,6 +53,12 @@ export default function TimerComponent({ onTimerEnd }) {
 
     const handleInputChange = (e) => {
         const { value } = e.target;
+        if (value === "") {
+            setInputTime("");
+            if (!isActive) setTimeRemaining("");
+            return;
+        }
+
         const parsedValue = parseInt(value, 10);
         if (!isNaN(parsedValue) && parsedValue >= 0) {
             setInputTime(parsedValue);
@@ -75,7 +81,8 @@ export default function TimerComponent({ onTimerEnd }) {
             <input
                 type="number"
                 min="0"
-                value={inputTime} // Valor padrão do input
+                value={inputTime === undefined ? "" : inputTime} // Valor padrão do input
+                placeholder="Digite o tempo aqui!"
                 onChange={handleInputChange}
                 disabled={isActive}
             />

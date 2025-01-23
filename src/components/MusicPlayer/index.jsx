@@ -52,9 +52,9 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     }, [album]);
 
     useEffect(() => {
-        for (let i = 0; i <= 8; 1++) {
+        for (let i = 0; i <= 8; i++) {
         if (playlist[currentSongIndex + 1]) {
-            const nextAudio = new Audio(playlist[currentSongIndex = 1].src);
+            const nextAudio = new Audio(playlist[currentSongIndex + 1].src);
             nextAudio.load();
             }
         }
@@ -170,11 +170,11 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                     <source src={playlist[currentSongIndex].src} type="audio/mp3" />
                 </audio>
                 <div>
-                    <button className="buttonplayer" onClick={prevSong}>back</button>
-                    <button className="buttonplayer" onClick={nextSong}>next</button>
-                    <button className="buttonplayer" onClick={restartSong}>Refresh</button>
+                    <button className="buttonplayer" onClick={prevSong}>voltar</button>
+                    <button className="buttonplayer" onClick={nextSong}>próxima</button>
+                    <button className="buttonplayer" onClick={restartSong}>início</button>
                     <button className="buttonplayer" onClick={toggleShuffle}>
-                        {isShuffled ? "Shuffle On" : "Shuffle off"}
+                        {isShuffled ? "Aleatório On" : "Aleatório off"}
                     </button>
                 </div>
 
