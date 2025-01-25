@@ -4,6 +4,7 @@ const TimerBlues = ({
     isVisible,
     countdownTime1,
     nextSong,
+    playAudio,
     pauseAudio,
     audioRef
 }) => {
@@ -44,6 +45,7 @@ const TimerBlues = ({
 
     const startTimer = () => {
         console.log("Timer iniciado");
+        playAudio();
 
         // Reduz o volume após o tempo inicial
         timerRef.current = setTimeout(() => {

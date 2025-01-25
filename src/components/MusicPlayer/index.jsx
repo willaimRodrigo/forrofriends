@@ -5,6 +5,7 @@ import TimerBlues from "../Funcions/TimerBlues";
 import TimerBlackBlue from "../Funcions/TimerblackBlue";
 
 import "./style.scss";
+import { PreExameAlarm } from "../Funcions/PreExamAlarm";
 
 const reduceVolume = (audio) => {
     if (!audio) return;
@@ -43,6 +44,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
     const [isTraingVisible, setIsTrainingVisible] = useState(false);
     const [isListVisible, setIsListVisible] = useState(false);
     const [isTraininBlackVisible, setIsTraininBlackVisible] = useState(false);
+    const [isTraininPreVisible, setIsTraininPreVisible] = useState(false);
 
     // Salva no cache quando a playlist mudar
     useEffect(() => {
@@ -86,6 +88,10 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
 
     const pauseAudio = () => {
         audioRef.current.pause();
+    };
+
+    const playAudio = () => {
+        audioRef.current.play();
     };
 
     const nextSong = () => {
@@ -148,6 +154,10 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
         setIsTraininBlackVisible(!isTraininBlackVisible);
     };
 
+    const toggleTrainingVisibilityPre = () => {
+        setIsTraininPreVisible(!isTraininPreVisible);
+    }
+
     const handleSongClick = (index) => {
         setCurrentSongIndex(index);
         audioRef.current.src = playlist[index].src;
@@ -174,6 +184,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                     <button className="buttonplayer" onClick={nextSong}>próxima</button>
                     <button className="buttonplayer" onClick={restartSong}>início</button>
                     <button className="buttonplayer" onClick={toggleShuffle}>
+                        
                         {isShuffled ? "Aleatório On" : "Aleatório off"}
                     </button>
                 </div>
@@ -209,6 +220,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                         <TimerComponent
                             onTimerEnd={handleTimerEnd}
                             isActive={isTimerActive}
+                            playAudio={playAudio}
                         />
                     </div>
                 )}
@@ -225,6 +237,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                             onClose={() => setIsTrainingVisible(false)}
                             nextSong={nextSong}
                             pauseAudio={pauseAudio} 
+                            playAudio={playAudio}
                             audioRef={audioRef}
                             restoreVolume={() => restoreVolume(audioRef)}
                             reduceVolume={() => reduceVolume(audioRef)}
@@ -246,9 +259,25 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                             onClose={() => setIsTrainingVisible(false)}
                             nextSong={nextSong}
                             pauseAudio={pauseAudio}
+                            playAudio={playAudio}
                             audioRef={audioRef}
                             restoreVolume={() => restoreVolume(audioRef)}
                             reduceVolume={() => reduceVolume(audioRef)}
+                        />
+                    </section>
+                )}
+
+                <button>
+                    {isTraininPreVisible ? "Fechar Pre" : "Timer Pré Exame"}
+                </button>
+                {isTraininPreVisible && (
+                    <section>
+                        <PreExameAlarm
+                            countdownTime1={countdownTime1}
+                            countdownTime2={countdownTime2}
+                            audioRef={audioRef}
+                            pauseAudio={pauseAudio}
+                            playAudio={playAudio}
                         />
                     </section>
                 )}

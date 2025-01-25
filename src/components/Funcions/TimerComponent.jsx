@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function TimerComponent({ onTimerEnd }) {
+export default function TimerComponent({ onTimerEnd, playAudio }) {
     const [timeRemaining, setTimeRemaining] = useState(); // Tempo restante em segundos
     const [isActive, setIsActive] = useState(false); // Estado do timer
     const [inputTime, setInputTime] = useState(); // Tempo inicial padrão (30 segundos)
@@ -25,6 +25,7 @@ export default function TimerComponent({ onTimerEnd }) {
             console.log("Configure um tempo válido antes de iniciar o timer.");
             return;
         }
+        playAudio();
 
         setTimeRemaining(inputTime);
         setIsActive(true);

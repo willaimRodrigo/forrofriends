@@ -6,6 +6,7 @@ const TimerBlackBlue = ({
       countdownTime2,
        nextSong,
         pauseAudio,
+        playAudio,
          audioRef,
         }) => {
     const [isTimerActive, setIsTimerActive] = useState(false);
@@ -68,7 +69,7 @@ const TimerBlackBlue = ({
                 restoreVolume();
             }, 2000)
              // Toca o som "agradeceu e trocou"
-        }, 70000); // 90 segundos
+        }, 69000); // 90 segundos
     };
 
     const reduceAndPause = () => {
@@ -102,7 +103,7 @@ const TimerBlackBlue = ({
 
     const startTimer = () => {
         console.log("Timer iniciado");
-
+        playAudio();
         // Inicia o primeiro setTimeout
         timerRef.current = setTimeout(() => {
             reduceAndPause();
@@ -146,8 +147,9 @@ const TimerBlackBlue = ({
     return (
         <div className="alert-timer-container">
             <h2>Alerta de Timer</h2>
-            <button onClick={toggleTimer}>
+            <button onClick={toggleTimer} >
                 {isTimerActive ? "Parar Timer" : "Iniciar Timer"}
+                
             </button>
         </div>
     );

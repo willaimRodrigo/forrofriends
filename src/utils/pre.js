@@ -1,4 +1,4 @@
-export const pre = [
+export const preLenta = [
     {
         src: '/audio/black/Acalanto.mp3',
         name: 'Acalanto',
@@ -23,6 +23,9 @@ export const pre = [
         band: 'Mariene de Castro',
         type: 'Plenta',
     },
+]
+
+export const preMedia = [
     {
         src: '/audio/white/Teu Olhar.mp3',
         name: 'Teu Olhar',
@@ -47,6 +50,9 @@ export const pre = [
         band:'Forró Lunar',
         type: 'Pmedia',
     },
+]
+
+export const preArrastape = [
     {
         src: '/audio/pre/Frevoador.mp3',
         name: 'Frevoador',
@@ -71,6 +77,9 @@ export const pre = [
         band: 'Forró Bemtivi',
         type: 'arrastape',
     },
+]
+    
+export const preRapida = [
     {
         src: '/audio/pre/Caminhada.mp3',
         name: 'Caminhada',
