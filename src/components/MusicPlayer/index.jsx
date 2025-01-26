@@ -54,7 +54,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2, ena
     }, [album]);
 
     useEffect(() => {
-        for (let i = 0; i <= 8; i++) {
+        for (let i = 0; i <= 4; i++) {
         if (playlist[currentSongIndex + 1]) {
             const nextAudio = new Audio(playlist[currentSongIndex + 1].src);
             nextAudio.load();

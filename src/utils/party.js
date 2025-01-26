@@ -90,6 +90,11 @@ export const party = [
     band: "Tr3s Tinguá",
   },
   {
+    src: "/audio/party/nossos olhos-1.mp3",
+    name: "nossos olhos-1",
+    band: "Forroçacana",
+  },
+  {
     src: "/audio/party/Desmantelo.mp3",
     name: "Desmantelo",
     band: "Dois Dobrados",
@@ -112,6 +117,11 @@ export const party = [
   {
     src: "/audio/party/Baião Destemperado.mp3",
     name: "Baião Destemperado",
+    band: "Barbatuques",
+  },
+  {
+    src: "/audio/party/Mensageiro de um Rei.mp3",
+    name: "Mensageiro de um Rei",
     band: "Barbatuques",
   },
   {
