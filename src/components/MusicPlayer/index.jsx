@@ -33,7 +33,7 @@ const restoreVolume = (audio) => {
     }, 100);
 };
 
-export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
+export default function MusicPlayer({ album, countdownTime1, countdownTime2, enabledTimers }) {
     const audioRef = useRef(null);
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
     const [playlist, setPlaylist] = useState(album);
@@ -191,7 +191,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
 
                 <div className="playlist-container">
                     <button className="button-list" onClick={toggleListVisibility}>
-                        {isListVisible ? "Close " : "Playlist"}
+                        {isListVisible ? "Close " : "Músicas"}
                     </button>
 
                     {isListVisible && (
@@ -213,7 +213,7 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
             
             <div className="divtimers">
                 <button onClick={toggleTimerVisibility}>
-                    {isTimerVisible ? "Fechar Timer" : "Alerta Trocou"}
+                    {isTimerVisible ? "Fechar Alerta" : "Agradeceu, Trocou"}
                 </button>
                 {isTimerVisible && (
                     <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
@@ -225,8 +225,8 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                     </div>
                 )}
 
-                <button onClick={toggleTrainingVisibility}>
-                    {isTraingVisible ? "Fechar Treino" : "Exame Sem Troca"}
+                <button onClick={toggleTrainingVisibility} hidden={!enabledTimers.blues}>
+                    {isTraingVisible ? "Fechar Simulador" : "Simular Exame"}
                 </button>
                 {isTraingVisible && (
                     <div style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
@@ -246,8 +246,8 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                     
                 )}
 
-                <button onClick={toggleTrainingVisibilityBlack}>
-                    {isTraininBlackVisible ? "Fechar Treino" : "Exame AzulAv/Preta"}
+                <button onClick={toggleTrainingVisibilityBlack} hidden={!enabledTimers.blackBlue}>
+                    {isTraininBlackVisible ? "Fechar Simulador" : "Simular Exame"}
                 </button>
                 {isTraininBlackVisible && (
                     <section style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
@@ -267,8 +267,8 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2 }) {
                     </section>
                 )}
 
-                <button>
-                    {isTraininPreVisible ? "Fechar Pre" : "Timer Pré Exame"}
+                <button onClick={toggleTrainingVisibilityPre} hidden={!enabledTimers.preExam}>
+                    {isTraininPreVisible ? "Fechar Simulador" : "Simular Pré Exme"}
                 </button>
                 {isTraininPreVisible && (
                     <section>

@@ -1,14 +1,16 @@
 import MusicPlayer from "../../components/MusicPlayer";
 import { preLenta, preMedia, preArrastape, preRapida } from "../../utils/pre";
 import { useState } from "react";
-import { PreExameAlarm } from "../../components/Funcions/PreExamAlarm";
+import "./style.scss";
+import { Tutorials } from "../../components/Tutorials";
 
 export const Pre = () => {
-    const [ selectedAlbum, setSelectedAlbum ] = useState(preLenta);
+    const [selectedAlbum, setSelectedAlbum] = useState(null);
 
     const handleAlbumChage = (album) => {
         setSelectedAlbum(album);
-    }
+    };
+
 
     return (
         <>
@@ -29,8 +31,13 @@ export const Pre = () => {
                     <button onClick={() => handleAlbumChage(preRapida)}>Rápidas</button>
                 </li>
             </ul>
-            <MusicPlayer album={selectedAlbum} />
-            <h4>Temporizador do pré está sendo implementado, tenhamos paciência</h4>
+            {selectedAlbum && <MusicPlayer album={selectedAlbum} 
+                enabledTimers={{
+                    blues: false,
+                    blackBlue: false,
+                    preExam: true,
+                }}
+            />}
         </>
-    )
-}
+    );
+};

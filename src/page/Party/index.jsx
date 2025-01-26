@@ -10,8 +10,11 @@ export const Party = () => {
             <h2>Baile</h2>
             <MusicPlayer 
             album={party} 
-            // countdownTime1={countdownTime1}
-            // countdouwnTime2={countdouwnTime2}
+                enabledTimers={{
+                    blues: false,
+                    blackBlue: false,
+                    preExam: false,
+                }}
             />
         </>
     ) 

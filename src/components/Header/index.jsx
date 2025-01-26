@@ -17,6 +17,9 @@ export const Header = () => {
                     <li>
                         <Link to="/About">Sobre o App</Link>
                     </li>
+                    <li>
+                        <Link to="/Tutorials">Tutorial</Link>
+                    </li>
                 </ul>
                 <img className="logo"
                  src="/img/logo-forrofriends.jpeg"

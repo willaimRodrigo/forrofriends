@@ -13,6 +13,11 @@ export const Black = () => {
             album={black} 
             countdownTime1={countdownTime1}
             countdouwnTime2={countdouwnTime2}
+                enabledTimers={{
+                    blues: false,
+                    blackBlue: true,
+                    preExam: false,
+                }}
             />
         </div>
     ) 

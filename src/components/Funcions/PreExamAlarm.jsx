@@ -1,22 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
-export const PreExameAlarm = ({
-    audioRef,       // Referência do áudio principal
-    playAudio,
-    pauseAudio,     // Função para pausar o áudio
-}) => {
+export const PreExameAlarm = ({ audioRef, playAudio, pauseAudio }) => {
+    const [timeRemaining, setTimeRemaining] = useState(0);
     const [isTimerActive, setIsTimerActive] = useState(false);
-    const [alertCount, setAlertCount] = useState(1); // Número de alertas configurados
-    const [inputAlertCount, setInputAlertCount] = useState(""); // Input para configurar alertas
-    const [inputTime, setInputTime] = useState(""); // Tempo configurado pelo usuário
-    const [timeBetweenAlerts, setTimeBetweenAlerts] = useState(4000); // Tempo entre alertas (padrão)
-    const timerRef = useRef(null);
+    const [inputTime, setInputTime] = useState(""); // Tempo total configurado pelo usuário
+    const [inputAlertCount, setInputAlertCount] = useState(""); // Número de alertas
+    const alertIntervalRef = useRef(null); // Ref para armazenar o setInterval
+    const totalTimerRef = useRef(null); // Ref para armazenar o setTimeout
 
+    // Função para tocar o alerta
     const playAlertSound = () => {
         const alertAudio = new Audio("/audio/agradeceu e trocou.mp3");
-        alertAudio.play()
-            .then(() => console.log("Alerta tocando..."))
-            .catch((err) => console.error("Erro ao reproduzir o alerta:", err));
+        alertAudio.play().catch((err) => console.error("Erro ao reproduzir o alerta:", err));
     };
 
     const reduceVolume = () => {
@@ -25,8 +20,9 @@ export const PreExameAlarm = ({
         let volume = audioRef.current.volume;
         const interval = setInterval(() => {
             if (volume > 0.1) {
-                volume -= 0.05;
-                audioRef.current.volume = Math.max(volume, 0);
+                volume -= 0.05; // Diminui gradualmente o volume
+                audioRef.current.volume = Math.max(volume, 0); // Impede volume abaixo de 0
+                console.log("reduzindo")
             } else {
                 clearInterval(interval);
                 console.log("Volume reduzido ao mínimo.");
@@ -40,130 +36,122 @@ export const PreExameAlarm = ({
         let volume = audioRef.current.volume;
         const interval = setInterval(() => {
             if (volume < 1) {
-                volume += 0.05;
-                audioRef.current.volume = Math.min(volume, 1);
+                volume += 0.05; // Aumenta gradualmente o volume
+                audioRef.current.volume = Math.min(volume, 1); // Impede volume acima de 1
             } else {
                 clearInterval(interval);
-                console.log("Volume restaurado ao máximo.");
+                console.log("volume restaurado ao maximo")
             }
         }, 300);
     };
 
-    const startAlarmSequence = () => {
-        if (!audioRef.current) {
-            console.error("Referência de áudio inválida.");
-            return;
-        }
+    const reduceAndPause = () => {
+        console.log("aqui a função")
+        setTimeout(() => {
+            console.log("aqui o reduce")
+            reduceVolume();
 
-        console.log("Iniciando sequência de alertas...");
+            setTimeout(() => {
+                pauseAudio();
+                console.log("chegou aqui")
+                restoreVolume();
+                setIsTimerActive(false);
+            }, 3000)
+        }, 1000)
+    }
 
-        let currentAlert = 0;
+    const alertReduceAndeRestore = () => {
+        reduceVolume();
 
-        const alertInterval = setInterval(() => {
-            if (currentAlert < alertCount) {
-                playAlertSound();
-                currentAlert++;
-            } else {
-                clearInterval(alertInterval);
-                console.log("Sequência de alertas concluída. Reduzindo volume e pausando música...");
-                reduceVolume();
+        setTimeout(() => {
+            playAlertSound();
 
-                setTimeout(() => {
-                    pauseAudio();
-                    restoreVolume();
-                }, 3000); // Pausa após reduzir o volume
-            }
-        }, timeBetweenAlerts);
-    };
+            setTimeout(() => {
+                restoreVolume();
+            }, 1500)
+        }, 2000)
+    }
 
+    // Iniciar o timer
     const startTimer = () => {
-        if (inputTime <= 0) {
-            console.log("Configure um tempo válido antes de iniciar o timer.");
-            return;
-        }
+        const totalTime = inputTime * inputAlertCount; // Tempo total em milissegundos
+        const alertIntervalTime = inputAlertCount * 1000; // Tempo entre os alertas em milissegundos (20 segundos)
+
+        console.log(`Iniciando o timer com ${totalTime / 1000} segundos.`);
+        setIsTimerActive(true); // Marca o timer como ativo
+        setTimeRemaining(totalTime);
+
         playAudio();
 
-        setTimeRemaining(inputTime);
-        setIsActive(true);
+        // Iniciar o intervalo de alertas (a cada 20 segundos)
+        alertIntervalRef.current = setInterval(() => {
+            alertReduceAndeRestore();// Chama a função para tocar o alerta
+            console.log("Alerta tocado!");
+        }, alertIntervalTime);
 
-        timerInterval.current = setInterval(() => {
+        // Iniciar o contador do tempo total
+        totalTimerRef.current = setTimeout(() => {
+            clearInterval(alertIntervalRef.current); // Para os alertas quando o tempo total acabar
+            reduceAndPause();
+            console.log("Tempo total finalizado.");
+            
+        }, totalTime * 1000);
+
+        const countdown = setInterval(() => {
             setTimeRemaining((prev) => {
                 if (prev <= 1) {
-                    playAlertSound(); // Reproduz o som de alerta
-                    // if (onTimerEnd) onTimerEnd();
-                    return inputTime; // Reinicia o timer com o valor do input
+                    clearInterval(countdown); // Para o contador quando o tempo acabar
+                    return 0;
                 }
                 return prev - 1; // Decrementa o tempo restante
             });
-        }, 1000); // Intervalo de 1 segundo
+        }, 1000);
     };
 
     const stopTimer = () => {
         console.log("Timer parado.");
-        clearTimeout(timerRef.current);
+        clearTimeout(totalTimerRef.current);
+        clearInterval(alertIntervalRef.current);
         setIsTimerActive(false);
+        pauseAudio();
     };
 
-    const handleAlertCountChange = (e) => {
-        const value = parseInt(e.target.value, 10);
-        setInputAlertCount(value || ""); // Permite limpar o input
-    };
-
-    const handleSetAlertCount = () => {
-        const count = parseInt(inputAlertCount, 10);
-        if (!isNaN(count) && count > 0) {
-            setAlertCount(count);
-            console.log(`Número de alertas configurado para: ${count}`);
-        } else {
-            alert("Por favor, insira um número válido de alertas!");
-        }
-    };
-
+    // Alterar o tempo total
     const handleTimeChange = (e) => {
         const value = e.target.value;
-        setInputTime(value === "" ? "" : parseInt(value, 10)); // Permite limpar o input
+        setInputTime(value === "" ? "" : parseInt(value, 10));
+         // Permite limpar o input
     };
 
-    useEffect(() => {
-        return () => {
-            stopTimer(); // Limpa o timer ao desmontar o componente
-        };
-    }, []);
+    // Alterar o número de alertas (não estamos utilizando diretamente, mas pode ser útil para futuras implementações)
+    const handleAlertCountChange = (e) => {
+        setInputAlertCount(e.target.value);
+    };
 
     return (
-        <div className="alert-timer-container">
+        <div>
             <h2>Alerta de Pré-Exame</h2>
-
-            {/* Input para configurar número de alertas */}
             <label>
-                Número de Alertas:
-                <input
-                    type="number"
-                    min="1"
-                    value={inputAlertCount}
-                    placeholder="Digite o número de alertas"
-                    onChange={handleAlertCountChange}
-                    disabled={isTimerActive}
-                />
-            </label>
-            <button onClick={handleSetAlertCount} disabled={isTimerActive}>
-                Configurar Alertas
-            </button>
-
-            {/* Input para configurar tempo inicial */}
-            <label>
-                Tempo Inicial (segundos):
+                Número de Examinadores:
                 <input
                     type="number"
                     min="1"
                     value={inputTime}
-                    placeholder="Digite o tempo aqui!"
                     onChange={handleTimeChange}
                     disabled={isTimerActive}
                 />
             </label>
-
-            {/* Botão de controle do Timer */}
+            <label>
+                Tempo por examinador (segundos):
+                <input
+                    type="number"
+                    min="1"
+                    value={inputAlertCount}
+                    onChange={handleAlertCountChange}
+                    disabled={isTimerActive}
+                />
+            </label>
+            <p>Tempo Restante: {timeRemaining}</p>
             <button onClick={isTimerActive ? stopTimer : startTimer}>
                 {isTimerActive ? "Parar Timer" : "Iniciar Timer"}
             </button>

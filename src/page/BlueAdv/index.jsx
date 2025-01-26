@@ -5,7 +5,13 @@ export const BlueAdv = () => {
     return (
         <>
             <h3>Azul Avancada</h3>
-            <MusicPlayer album={blueadv} />
+            <MusicPlayer album={blueadv} 
+                enabledTimers={{
+                    blues: false,
+                    blackBlue: true,
+                    preExam: false,
+                }}
+            />
         </>
     )
 }

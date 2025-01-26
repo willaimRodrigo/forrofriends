@@ -9,6 +9,7 @@ import { Party } from "../page/Party";
 import { Blueint } from "../page/Blueint";
 import { White } from "../page/White";
 import { Pre } from "../page/Pre";
+import { Tutorials } from "../components/Tutorials";
 
 export const RouterMain = () => {
     return (
@@ -23,6 +24,7 @@ export const RouterMain = () => {
             <Route path="/white" element={<White />} />
             <Route path="/party" element={<Party />} />
             <Route path="/about" element={<About />} />
+            <Route path="/tutorials" element={<Tutorials />} />
         </Routes>
     )
 }

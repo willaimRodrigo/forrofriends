@@ -6,7 +6,13 @@ export const Blueint = () => {
         <>
             <h3>Azul Intermediária</h3>
             <p>Em construção</p>
-            <MusicPlayer album={blueint} />
+            <MusicPlayer album={blueint} 
+                enabledTimers={{
+                    blues: true,
+                    blackBlue: false,
+                    preExam: false,
+                }}
+            />
         </>
     )
 }

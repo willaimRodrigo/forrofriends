@@ -6,7 +6,13 @@ export const White = () => {
         <>
             <h3>Branca</h3>
             <p>Em construção</p>
-            <MusicPlayer album={white} />
+            <MusicPlayer album={white}
+                enabledTimers={{
+                    blues: true,
+                    blackBlue: false,
+                    preExam: false,
+                }}
+            />
         </>
     )
 }

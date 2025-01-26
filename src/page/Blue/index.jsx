@@ -12,6 +12,11 @@ export const Blue = () => {
             <MusicPlayer 
             album={blue} 
             countdownTime1={countdownTime1}
+            enabledTimers={{
+                blues: true,
+                blackBlue: false,
+                preExam: false,
+            }}
             />
         </>
     ) 
