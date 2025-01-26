@@ -5,12 +5,11 @@ import "./style.scss";
 export const Playlists = () => {
     return (
         <section className="playlist-section">
-            <h2>Escolha um álbum</h2>
-
             <nav>
                 <ul className="ul-album">
                     <li className="list-album">
-                        <Link to="/pre">Pre Inzame</Link>
+                        <Link to="/pre" >Pre Inzame</Link>
+                        
                     </li>
                     <li className="list-album">
                         <Link to="/black">Preta</Link>

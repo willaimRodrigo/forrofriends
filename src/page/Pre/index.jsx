@@ -13,11 +13,11 @@ export const Pre = () => {
 
 
     return (
-        <>
+        <section className="pre-section">
             <h3>Pré Inzame</h3>
             <p>Escolha uma categoria:</p>
 
-            <ul>
+            <ul className="category-list">
                 <li>
                     <button onClick={() => handleAlbumChage(preLenta)}>Lentas</button>
                 </li>
@@ -38,6 +38,6 @@ export const Pre = () => {
                     preExam: true,
                 }}
             />}
-        </>
+        </section>
     );
 };
