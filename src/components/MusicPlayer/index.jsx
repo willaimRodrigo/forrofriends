@@ -267,11 +267,12 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2, ena
                     </section>
                 )}
 
-                <button onClick={toggleTrainingVisibilityPre} hidden={!enabledTimers.preExam}>
+                <section>
+                    <button onClick={toggleTrainingVisibilityPre} hidden={!enabledTimers.preExam}>
                     {isTraininPreVisible ? "Fechar Simulador" : "Simular Pré Exme"}
                 </button>
                 {isTraininPreVisible && (
-                    <section>
+                    <section style={{ border: "1px solid black", padding: "10px", marginTop: "10px" }}>
                         <PreExameAlarm
                             countdownTime1={countdownTime1}
                             countdownTime2={countdownTime2}
@@ -281,6 +282,8 @@ export default function MusicPlayer({ album, countdownTime1, countdownTime2, ena
                         />
                     </section>
                 )}
+                </section>
+                
             </div>
             
         </>

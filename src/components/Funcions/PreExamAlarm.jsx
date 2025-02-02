@@ -132,26 +132,28 @@ export const PreExameAlarm = ({ audioRef, playAudio, pauseAudio }) => {
         <div>
             <h2>Alerta de Pré-Exame</h2>
             <label>
-                Número de Examinadores:
-                <input
+                Examinadores:
+                <input style={{ border: "1px solid black", marginTop: "10px" }}
                     type="number"
                     min="1"
                     value={inputTime}
+                    placeholder="Quantos examinadores há?"
                     onChange={handleTimeChange}
                     disabled={isTimerActive}
                 />
             </label>
             <label>
-                Tempo por examinador (segundos):
-                <input
+                Tempo com examinador (segundos):
+                <input style={{ border: "1px solid black", marginTop: "10px" }}
                     type="number"
                     min="1"
                     value={inputAlertCount}
+                    placeholder="Digite o tempo em segundos"
                     onChange={handleAlertCountChange}
                     disabled={isTimerActive}
                 />
             </label>
-            <p>Tempo Restante: {timeRemaining}</p>
+            <p>Tempo Total Restante: {timeRemaining}</p>
             <button onClick={isTimerActive ? stopTimer : startTimer}>
                 {isTimerActive ? "Parar Timer" : "Iniciar Timer"}
             </button>
