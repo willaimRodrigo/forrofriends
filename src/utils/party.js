@@ -1,5 +1,10 @@
 export const party = [
   {
+    src: "/audio/party/Teu Calor.mp3",
+    name: "Teu Calor",
+    band: "Trio Macaíba",
+  },
+  {
     src: "/audio/party/Balanceiro.mp3",
     name: "Balanceiro",
     band: "Forró stream",

@@ -1,29 +1,89 @@
 export const preLenta = [
-    {
-        src: '/audio/black/Acalanto.mp3',
-        name: 'Acalanto',
-        band: 'Black do Acordeon e Barbara Greco',
-        type: 'Plenta',
-    },
-    {
-        src: '/audio/black/Alumiou.mp3',
-        name: 'Alumiou',
-        band: 'Ó do forrò',
-        type: 'Plenta',
-    },
-    {
-        src: '/audio/black/Carinho-do-Bom.mp3',
-        name: 'Carinho do Bom',
-        band: 'Jaime',
-        type: 'Plenta',
-    },
-    {
-        src: '/audio/black/Caxixi.mp3',
-        name: 'Caxixi',
-        band: 'Mariene de Castro',
-        type: 'Plenta',
-    },
-]
+  {
+    src: "/audio/pre/preLenta/COMÉ QUE FAZ.mp3",
+    name: "COMÉ QUE FAZ",
+    band: "Gui Ventura, Black do Arcodeon",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/De Amor Eu Morrerei.mp3",
+    name: "De Amor Eu Morrerei",
+    band: "Gal Costa",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Desconhecido.mp3",
+    name: "Desconhecido",
+    band: "Liah Soares",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Destino e Verdade.mp3",
+    name: "Destino e Verdade",
+    band: "Conrado Pera & Mariana Aydar",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/EI, COISINHA!.mp3",
+    name: "EI, COISINHA!",
+    band: "Clara Valverde",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Espumas ao Vento.mp3",
+    name: "Espumas ao Vento",
+    band: "Mariana Aydar",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Do Teu Sorriso.mp3",
+    name: "Do Teu Sorriso",
+    band: "Mariana Aydar, Dominguinhos",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Não demore.mp3",
+    name: "Não demore",
+    band: "Zaíra",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Olhar de Poesia.mp3",
+    name: "Olhar de Poesia",
+    band: "Trio Lubião",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Pode Se Achegar.mp3",
+    name: "Pode Se Achegar",
+    band: "Tiago Iorc, Agnes Nunes",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Swing de outono.mp3",
+    name: "Swing de outono",
+    band: "Romain Frécenon, Lucas Notaro",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Táxi Lunar.mp3",
+    name: "Táxi Lunar",
+    band: "Mariana Aydar & Fejuca",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Tropicana.mp3",
+    name: "Tropicana",
+    band: "Alceu Valença",
+    type: "Plenta",
+  },
+  {
+    src: "/audio/pre/preLenta/Ultima Dança.mp3",
+    name: "Ultima Dança",
+    band: "Agnes Nunes & Neo Beats",
+    type: "Plenta",
+  },
+];
 
 export const preMedia = [
     {

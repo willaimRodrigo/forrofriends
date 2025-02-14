@@ -5,6 +5,11 @@ export const Tutorials = () => {
 
     return (
         <section className="tutorial-section">
+            <h3>Baixar atalho</h3>
+            <p>Na barra do navegador, clique nos 3 pontihos. Logo abrirá um menu lateral, desça até a opção
+                 <span>Adicionar a tela inicial</span> e clique, ele fará o download de um ícone no seu celular, após, só clicar 
+                 no atalho e você terá acesso ao app de forma muito mais fácil!</p>
+
             <h3>Bem vindo ao Tutorial do ForróFriends <span>botões</span></h3>
             <p>Ao clicar na playlist que deseja, abrirá a página com a música atual, controles de play,
                  pause, volume, pular e reiniciar a músicas. Logo abaixo, escrito <span>Músicas</span>, está armazanado 
